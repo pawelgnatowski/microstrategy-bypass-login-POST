@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Alternative way to do POST login to MicroStrategy without revleaing session data or user credentials"
+		/>
+		<meta name="keywords" content="HTML,JavaScript" />
+		<meta name="author" content="Pawel Gnatowski" />
+		<title>POST Login Example</title>
+		<script defer src="./loginPOST.js"></script>
+		<style>
+			button {
+				background-color: #0e6ff9;
+				background: #0e6ff9;
+				color: white;
+				/* border: none; */
+				border-color: #ebebeb;
+			}
+		</style>
+		<script>
+			const ENUM_MSTR_AUTHENTICATION_MODE = {
+				Standard: 1,
+				LDAP: 16,
+				Database: 32,
+				Guest: 8,
+				Windows: 2,
+				Trusted: 64,
+				Integrated: 128,
+				SAML: 1048576,
+				default: 1,
+			}; // these are connection modes for MicroStrategy
+			
+			const authMode = ENUM_MSTR_AUTHENTICATION_MODE.Standard;
+
+			//test user
+			const myAuth = {
+				login: 'Administrator',
+				password: 'MySecretPassword',
+				authMode: authMode,
+			};
+		</script>
+	</head>
+	<body>
+		<h3>Run Tutorial Embedded TRANSACTIONAL SALES REPORT with POST</h3>
+		<label for="biEnv">Enter your environment's Web Server URL</label><br />
+		<input
+			placeholder="https://myTomcatWebserver:443/MicroStrategy/servlet/mstrWeb"
+			value=""
+			id="biEnv"
+			type="text"
+			style="min-width: 350px"
+		/><br />
+		<label for="server">Enter your server name and port</label><br />
+		<input
+			placeholder="e.g.: my.iserver.biz"
+			value=""
+			id="server"
+			type="text"
+			style="min-width: 100px"
+		/>
+		<input
+			placeholder="0"
+			value=""
+			id="port"
+			type="text"
+			style="min-width: 30px"
+		/><br />
+		<button
+			id="runTest"
+			onclick="{
+            
+            let baseURL = document.getElementById('biEnv').value;
+            let server = document.getElementById('server').value;
+            let port = document.getElementById('port').value;
+            let serverString = `&Server=${server}&Port=${port}`;
+
+            let documentLink = baseURL + `?evt=2048001&src=mstrWeb.2048001&documentID=D483D611457F1F641EFD51BA8F63B8F2&currentViewMedia=1&visMode=0&Project=MicroStrategy%20Tutorial${serverString}&share=1&hiddensections=header,path,dockTop,dockLeft,footer`;
+
+        mstrPOSTlogin(myAuth,baseURL,serverString).then(() => {
+                
+
+            let myiframe = document.getElementById('embededMSTR');
+                myiframe?.setAttribute('src', documentLink );
+          
+        }) };"
+		>
+			Login and run embeded MicroStrategy dashboard
+		</button>
+		<br />
+		<button id="mstrLogout" onclick="mstrLogout();">Logout</button><br />
+		<iframe style="min-width: 45%; min-height: 600px" id="embededMSTR"></iframe>
+		<iframe
+			style="min-width: 45%; min-height: 600px"
+			src=""
+			frameborder="0"
+			id="embededMSTRdossier"
+		></iframe>
+	</body>
+</html>
