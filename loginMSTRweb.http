@@ -1,12 +1,14 @@
 #see README.md for usage information.
-POST https://webserver:port/MicroStrategy/servlet/mstrWeb HTTP/1.1
-Host: webserver:port
+POST https://WEBSERVER:PORT/MicroStrategy/servlet/mstrWeb HTTP/1.1
+Host: WEBSERVER:PORT
 
 content-type: application/x-www-form-urlencoded
+# replace with your server making the call
 Origin: http://kubernetes.docker.internal:5500
 
 Sec-Fetch-Mode: cors
 Redirect: follow
 
 Referer: http://kubernetes.docker.internal:5500/
-Body: evt=4001&src=mstrWeb.4001&reportViewMode=1&reportID=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&Server=bitbrowser.io&Port=59991&uid=Administrator&pwd=M%24tr2020&connMode=1
+# replace USERNAME and PASSWORD and set correctly connMode
+Body: evt=4001&src=mstrWeb.4001&reportViewMode=1&reportID=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&Server=bitbrowser.io&Port=59991&uid=USERNAME&pwd=PASSWORD&connMode=1

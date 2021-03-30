@@ -1,7 +1,4 @@
 "use strict";
-//test
-
-
 
 const userCredentials = (username, password, authMode = ENUM_MSTR_AUTHENTICATION_MODE.Standard) => {
     return {

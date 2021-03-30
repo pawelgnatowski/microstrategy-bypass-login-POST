@@ -18,3 +18,4 @@ Referer: http://kubernetes.docker.internal:5500/
 as those values are just an example for my local DEV environment web server.
 
 read the full story about this approach [link]
+
